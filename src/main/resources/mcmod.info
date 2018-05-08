@@ -1,0 +1,16 @@
+[
+{
+  "modid": "selimpenguins",
+  "name": "Penguins",
+  "description": "Simply adds penguins.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://minecraft.curseforge.com/projects/penguins",
+  "updateUrl": "https://minecraft.curseforge.com/projects/penguins",
+  "authorList": ["Selim_042"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

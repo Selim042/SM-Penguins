@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "selimpenguin:items/tophat_base",
+        "layer1": "selimpenguin:items/tophat_stripe"
+    }
+}
