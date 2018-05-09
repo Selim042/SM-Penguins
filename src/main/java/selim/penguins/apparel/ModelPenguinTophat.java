@@ -12,14 +12,22 @@ public class ModelPenguinTophat extends ModelBase {
 	public ModelPenguinTophat() {
 		this.textureWidth = 32;
 		this.textureHeight = 32;
+		// this.brim = new ModelRenderer(this, 0, 0);
+		// // this.brim.addBox(0.0F, 0.0F, -1.0F, 8, 1, 7, 0.0F);
+		// this.brim.addBox(-4.0F, 3.5F, -1.5F, 8, 1, 7, 0.0F);
+		// // this.brim.setRotationPoint(-4.0F, 3.5F, -0.5F);
+		// this.brim.setRotationPoint(0.0f, 0.0f, 0.0f);
+		// this.main = new ModelRenderer(this, 0, 8);
+		// // this.main.addBox(0.0F, 0.0F, 0.0F, 6, 5, 5, 0.0F);
+		// this.main.addBox(-3.0F, -1.5F, -0.5F, 6, 5, 5, 0.0F);
+		// // this.main.setRotationPoint(-3.0F, -1.5F, -0.5F);
+		// this.main.setRotationPoint(0.0f, 0.0f, 0.0f);
 		this.brim = new ModelRenderer(this, 0, 0);
-		// this.brim.setRotationPoint(-4.0F, 3.5F, -0.5F);
-		this.brim.setRotationPoint(0.0f, 0.0f, 0.0f);
 		this.brim.addBox(0.0F, 0.0F, -1.0F, 8, 1, 7, 0.0F);
+		this.brim.setRotationPoint(-4.0F, 3.5F, -0.5F);
 		this.main = new ModelRenderer(this, 0, 8);
-		// this.main.setRotationPoint(-3.0F, -1.5F, -0.5F);
-		this.main.setRotationPoint(0.0f, 0.0f, 0.0f);
 		this.main.addBox(0.0F, 0.0F, 0.0F, 6, 5, 5, 0.0F);
+		this.main.setRotationPoint(-3.0F, -1.5F, -0.5F);
 	}
 
 	@Override
