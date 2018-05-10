@@ -2,7 +2,6 @@ package selim.penguins.crafting;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -14,7 +13,6 @@ import selim.penguins.IApparelPattern;
 import selim.penguins.Penguins;
 import selim.penguins.items.ItemApparelPatterned;
 import selim.penguins.items.ItemApparelPatterned.ColoredPattern;
-import selim.penguins.items.ItemScarf.EnumScarfPattern;
 
 public class RecipeApparelPatterned {
 
@@ -44,6 +42,7 @@ public class RecipeApparelPatterned {
 				return this.matchPatterns(inv) != null;
 		}
 
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public ItemStack getCraftingResult(InventoryCrafting inv) {
 			ItemStack itemstack = ItemStack.EMPTY;
@@ -104,7 +103,7 @@ public class RecipeApparelPatterned {
 		// Copied from the banner crafting & lightly modified
 		@Nullable
 		private IApparelPattern matchPatterns(InventoryCrafting inv) {
-//			 return EnumScarfPattern.BASE;
+			// return EnumScarfPattern.BASE;
 			ItemStack apparelStack = null;
 			ItemApparelPatterned<?> apparelItem = null;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {

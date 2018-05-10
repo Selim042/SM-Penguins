@@ -1,13 +1,10 @@
 package selim.penguins.items;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import selim.penguins.IApparelPattern;
@@ -26,11 +23,8 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
-		// for (ColoredPattern pattern : getPatterns(stack)) {
-		//// System.out.println(pattern.getPattern() + ": " +
-		// pattern.getColor());
-		// tooltip.add(pattern.getPattern() + ": " + pattern.getColor());
-		// }
+		for (ColoredPattern<EnumScarfPattern> pattern : getPatterns(stack))
+			tooltip.add(pattern.getPattern() + ": " + pattern.getColor());
 	}
 
 	@Override
@@ -38,68 +32,45 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 		return EnumScarfPattern.values();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public ColoredPattern<EnumScarfPattern>[] getPatterns(ItemStack stack) {
-		if (stack == null || !(stack.getItem() instanceof ItemScarf))
-			return null;
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return new ColoredPattern[] {};
-		List<ColoredPattern<EnumScarfPattern>> patterns = new ArrayList<ColoredPattern<EnumScarfPattern>>();
-		NBTTagList list = nbt.getTagList("patterns", 10);
-		for (int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound patternNbt = list.getCompoundTagAt(i);
-			// System.out.println(patternNbt.getString("pattern") + ":"
-			// + EnumScarfPattern.fromId(patternNbt.getString("pattern")));
-			ColoredPattern<EnumScarfPattern> coloredPat = new ColoredPattern<EnumScarfPattern>(
-					EnumScarfPattern.fromId(patternNbt.getString("pattern")),
-					EnumDyeColor.byMetadata(patternNbt.getInteger("color")));
-			if (coloredPat == null || coloredPat.getPattern() == null)
-				continue;
-			patterns.add(coloredPat);
-		}
-		return (ColoredPattern<EnumScarfPattern>[]) patterns
-				.toArray(new ColoredPattern[patterns.size()]);
-	}
-
-	@Override
-	public void addPattern(ItemStack stack, ColoredPattern<EnumScarfPattern> pattern) {
-		if (stack == null || !(stack.getItem() instanceof ItemScarf))
-			return;
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) {
-			nbt = new NBTTagCompound();
-			stack.setTagCompound(nbt);
-		}
-		NBTTagList list = nbt.getTagList("patterns", 10);
-		if (list == null) {
-			list = new NBTTagList();
-			nbt.setTag("patterns", list);
-		}
-		list.appendTag(pattern.serializeToNbt());
-		nbt.setTag("patterns", list);
-		stack.setTagCompound(nbt);
-	}
-
 	@Override
 	public boolean shouldShinkIfBaby() {
 		return false;
 	}
 
+	public static class ItemColorScarf implements IItemColor {
+
+		@Override
+		public int colorMultiplier(ItemStack stack, int tintIndex) {
+			if (!(stack.getItem() instanceof ItemApparelPatterned) || tintIndex != 0)
+				return -1;
+			ColoredPattern<?>[] patterns = ((ItemApparelPatterned<?>) stack.getItem())
+					.getPatterns(stack);
+			for (ColoredPattern<?> pattern : patterns)
+				if (pattern.getPattern().equals(EnumScarfPattern.BASE))
+					return pattern.getColor().getColorValue();
+			return 0xFFFFFF;
+		}
+
+	}
+
 	public static enum EnumScarfPattern implements IApparelPattern {
-		BASE("textures/apparel/scarf/base.png", "base", "   ", "   ", " # "),
-		VERTICAL_STRIPE("textures/apparel/scarf/vertical_stripe.png", "vertical_stripe", "#  ", "#  ",
-				"#  "),
-		HORIZONTAL_STRIPE("textures/apparel/scarf/hotizontal_stripe.png", "horizonal_stripe", "###",
-				"   ", "   "),
-		CHECKERED("textures/apparel/scarf/checkered.png", "checkered", " # ", "# #", " # "),
-		BOTTOM_STRIPE("textures/apparel/scarf/bottom_stripe.png", "bottom_stripe", "   ", "   ", "###");
+		BASE(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/base.png"),
+				new ResourceLocation(Penguins.MODID, "base"), "   ", "   ", " # "),
+		VERTICAL_STRIPE(
+				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/vertical_stripe.png"),
+				new ResourceLocation(Penguins.MODID, "vertical_stripe"), "#  ", "#  ", "#  "),
+		HORIZONTAL_STRIPE(
+				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/horizontal_stripe.png"),
+				new ResourceLocation(Penguins.MODID, "horizontal_stripe"), "###", "   ", "   "),
+		CHECKERED(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/checkered.png"),
+				new ResourceLocation(Penguins.MODID, "checkered"), " # ", "# #", " # "),
+		BOTTOM_STRIPE(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/bottom_stripe.png"),
+				new ResourceLocation(Penguins.MODID, "bottom_stripe"), "   ", "   ", "###");
 
 		private final ResourceLocation fileName;
 		private final ResourceLocation id;
 		private final String[] patterns;
-		private ItemStack patternItem;
+		private ItemStack patternItem = ItemStack.EMPTY;
 
 		private EnumScarfPattern(String fileName, String id) {
 			this(new ResourceLocation(fileName), new ResourceLocation(id));
@@ -107,7 +78,7 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 
 		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id) {
 			this.patterns = new String[3];
-			this.patternItem = ItemStack.EMPTY;
+			// this.patternItem = ItemStack.EMPTY;
 			this.fileName = fileName;
 			this.id = id;
 		}
@@ -154,11 +125,6 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 		}
 
 		@Override
-		public boolean hasPatternItem() {
-			return !this.patternItem.isEmpty();
-		}
-
-		@Override
 		public ItemStack getPatternItem() {
 			return this.patternItem;
 		}
@@ -172,6 +138,11 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 				if (p.id.equals(id))
 					return p;
 			return null;
+		}
+
+		@Override
+		public ItemApparelPatterned<?> getApplicableApparel() {
+			return Penguins.Items.SCARF;
 		}
 
 	}

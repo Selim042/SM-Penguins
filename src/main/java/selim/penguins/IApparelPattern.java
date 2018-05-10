@@ -6,8 +6,11 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import selim.penguins.items.ItemApparelPatterned;
 
 public interface IApparelPattern {
+
+	public ItemApparelPatterned<?> getApplicableApparel();
 
 	public ResourceLocation getTexture();
 
@@ -17,7 +20,9 @@ public interface IApparelPattern {
 
 	public boolean hasPattern();
 
-	public boolean hasPatternItem();
+	default public boolean hasPatternItem() {
+		return !this.getPatternItem().isEmpty();
+	}
 
 	public ItemStack getPatternItem();
 

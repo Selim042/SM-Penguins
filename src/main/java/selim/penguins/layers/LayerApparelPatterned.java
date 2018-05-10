@@ -1,7 +1,5 @@
 package selim.penguins.layers;
 
-import java.awt.Color;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -39,6 +37,7 @@ public class LayerApparelPatterned implements LayerRenderer<EntityPenguin> {
 			ItemApparelPatterned<?> apparel = (ItemApparelPatterned<?>) stack.getItem();
 			ColoredPattern<?>[] patterns = apparel.getPatterns(stack);
 			GlStateManager.pushMatrix();
+			// GlStateManager.depthFunc(GL11.GL_EQUAL);
 			if (entity.isChild()) {
 				if (apparel.shouldShinkIfBaby()) {
 					GlStateManager.scale(0.5F, 0.5F, 0.5F);
@@ -51,10 +50,12 @@ public class LayerApparelPatterned implements LayerRenderer<EntityPenguin> {
 			this.model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
 					scale);
 			for (ColoredPattern<?> pattern : patterns) {
-				// System.out.println(pattern);
+				// System.out.println(pattern.getPattern() + ": " +
+				// pattern.getColor());
 				this.renderer.bindTexture(pattern.getPattern().getTexture());
-				Color color = new Color(pattern.getColor().getColorValue());
-				GlStateManager.color(color.getRed(), color.getBlue(), color.getGreen());
+				float[] colors = pattern.getColor().getColorComponentValues();
+				// Color color = new Color(pattern.getColor().getColorValue());
+				GlStateManager.color(colors[0], colors[1], colors[2]);
 				this.model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
 						scale);
 			}

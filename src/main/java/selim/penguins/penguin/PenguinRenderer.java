@@ -5,8 +5,10 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import selim.penguins.Penguins;
 import selim.penguins.apparel.ModelPenguinBowtie;
+import selim.penguins.apparel.ModelPenguinScarf;
 import selim.penguins.apparel.ModelPenguinTophat;
 import selim.penguins.layers.LayerApparelColored;
+import selim.penguins.layers.LayerApparelPatterned;
 
 public class PenguinRenderer extends RenderLiving<EntityPenguin> {
 
@@ -19,10 +21,9 @@ public class PenguinRenderer extends RenderLiving<EntityPenguin> {
 				.add(new LayerApparelColored(this, new ModelPenguinTophat(), Penguins.Items.TOPHAT,
 						new ResourceLocation(Penguins.MODID, "textures/apparel/tophat.png"),
 						new ResourceLocation(Penguins.MODID, "textures/apparel/tophat_stripe.png")));
-		// this.layerRenderers
-		// .add(new LayerApparelPatterned(this, new ModelPenguinScarf(),
-		// Penguins.Items.SCARF,
-		// new ResourceLocation(Penguins.MODID, "textures/apparel/scarf.png")));
+		this.layerRenderers
+				.add(new LayerApparelPatterned(this, new ModelPenguinScarf(), Penguins.Items.SCARF,
+						new ResourceLocation(Penguins.MODID, "textures/apparel/scarf.png")));
 		// this.layerRenderers.add(new LayerApparel(this, new ModelPenguinFez(),
 		// Penguins.Items.FEZ,
 		// new ResourceLocation(Penguins.MODID, "textures/apparel/fez.png")));

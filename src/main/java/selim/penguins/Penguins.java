@@ -37,9 +37,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import selim.penguins.apparel.ModelPenguinTophat;
 import selim.penguins.crafting.RecipeApparelColoredDying;
+import selim.penguins.crafting.RecipeApparelPatterned;
 import selim.penguins.items.ItemApparelColored;
+import selim.penguins.items.ItemApparelPatterned;
 import selim.penguins.items.ItemBowtie;
 import selim.penguins.items.ItemBowtie.ItemColorBowtie;
+import selim.penguins.items.ItemScarf;
+import selim.penguins.items.ItemScarf.ItemColorScarf;
 import selim.penguins.items.ItemTophat;
 import selim.penguins.items.ItemTophat.ItemColorTophat;
 import selim.penguins.layers.LayerPatreon;
@@ -62,7 +66,7 @@ public class Penguins {
 
 		public static final ItemApparelColored BOWTIE = null;
 		public static final ItemApparelColored TOPHAT = null;
-		// public static final ItemApparelPatterned<?> SCARF = null;
+		public static final ItemApparelPatterned<?> SCARF = null;
 		// public static final ItemApparel FEZ = null;
 
 	}
@@ -78,7 +82,7 @@ public class Penguins {
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		event.getRegistry().register(new ItemBowtie());
 		event.getRegistry().register(new ItemTophat());
-		// event.getRegistry().register(new ItemScarf());
+		event.getRegistry().register(new ItemScarf());
 		// event.getRegistry().register(new ItemFez());
 	}
 
@@ -98,8 +102,7 @@ public class Penguins {
 	@SubscribeEvent
 	public static void registerRecipe(RegistryEvent.Register<IRecipe> event) {
 		event.getRegistry().register(new RecipeApparelColoredDying());
-		// event.getRegistry().register(new
-		// RecipeApparelPatterned.RecipeAddPattern());
+		event.getRegistry().register(new RecipeApparelPatterned.RecipeAddPattern());
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -121,6 +124,7 @@ public class Penguins {
 		ItemColors colors = Minecraft.getMinecraft().getItemColors();
 		colors.registerItemColorHandler(new ItemColorBowtie(), Items.BOWTIE);
 		colors.registerItemColorHandler(new ItemColorTophat(), Items.TOPHAT);
+		colors.registerItemColorHandler(new ItemColorScarf(), Items.SCARF);
 
 		for (RenderPlayer renderPlayer : Minecraft.getMinecraft().getRenderManager().getSkinMap()
 				.values())
@@ -137,9 +141,8 @@ public class Penguins {
 				new ModelResourceLocation(Items.BOWTIE.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(Items.TOPHAT, 0,
 				new ModelResourceLocation(Items.TOPHAT.getRegistryName(), "inventory"));
-		// ModelLoader.setCustomModelResourceLocation(Items.SCARF, 0,
-		// new ModelResourceLocation(Items.SCARF.getRegistryName(),
-		// "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Items.SCARF, 0,
+				new ModelResourceLocation(Items.SCARF.getRegistryName(), "inventory"));
 	}
 
 }
