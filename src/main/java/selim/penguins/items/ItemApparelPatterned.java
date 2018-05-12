@@ -3,12 +3,17 @@ package selim.penguins.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import selim.penguins.IApparelPattern;
-import selim.penguins.items.ItemScarf.EnumScarfPattern;
 
 public abstract class ItemApparelPatterned<E extends IApparelPattern> extends ItemApparel {
 
@@ -30,21 +35,39 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 		return (IApparelPattern[]) PATTERNS.toArray(new IApparelPattern[0]);
 	}
 
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
+			ITooltipFlag flagIn) {
+		for (ColoredPattern<?> pattern : this.getPatterns(stack))
+			tooltip.add(I18n.format(pattern.pattern.getUnlocalizedName(),
+					I18n.format(pattern.color.getUnlocalizedName())));
+	}
+
 	public abstract E[] getPossiblePatterns();
 
 	@SuppressWarnings("unchecked")
 	public ColoredPattern<E>[] getPatterns(ItemStack stack) {
-		if (stack == null || !(stack.getItem() instanceof ItemScarf))
+		if (stack == null || !(stack.getItem() instanceof ItemApparelPatterned))
 			return null;
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null)
 			return new ColoredPattern[0];
-		List<ColoredPattern<EnumScarfPattern>> patterns = new ArrayList<ColoredPattern<EnumScarfPattern>>();
+		ItemApparelPatterned<?> apparel = (ItemApparelPatterned<?>) stack.getItem();
+		List<ColoredPattern<?>> patterns = new ArrayList<>();
 		NBTTagList list = nbt.getTagList("patterns", 10);
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound patternNbt = list.getCompoundTagAt(i);
-			ColoredPattern<EnumScarfPattern> coloredPat = new ColoredPattern<EnumScarfPattern>(
-					EnumScarfPattern.fromId(patternNbt.getString("pattern")),
+			IApparelPattern pattern = null;
+			for (IApparelPattern p : apparel.getPossiblePatterns()) {
+				if (p.getId().equals(new ResourceLocation(patternNbt.getString("pattern")))) {
+					pattern = p;
+					break;
+				}
+			}
+			if (pattern == null)
+				continue;
+			ColoredPattern<?> coloredPat = new ColoredPattern<>(pattern,
 					EnumDyeColor.byMetadata(patternNbt.getInteger("color")));
 			if (coloredPat == null || coloredPat.getPattern() == null)
 				continue;
@@ -54,7 +77,7 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 	}
 
 	public void addPattern(ItemStack stack, ColoredPattern<E> pattern) {
-		if (stack == null || !(stack.getItem() instanceof ItemScarf))
+		if (stack == null || !(stack.getItem() instanceof ItemApparelPatterned))
 			return;
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {

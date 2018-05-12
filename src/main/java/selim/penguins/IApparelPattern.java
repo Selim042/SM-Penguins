@@ -16,6 +16,8 @@ public interface IApparelPattern {
 
 	public ResourceLocation getId();
 
+	public String getUnlocalizedName();
+
 	public String[] getPatterns();
 
 	public boolean hasPattern();

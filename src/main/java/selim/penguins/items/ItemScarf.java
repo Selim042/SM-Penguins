@@ -55,50 +55,61 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 
 	public static enum EnumScarfPattern implements IApparelPattern {
 		BASE(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/base.png"),
-				new ResourceLocation(Penguins.MODID, "base"), "   ", "   ", " # "),
+				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + "base", "   ", "   ",
+				" # "),
 		VERTICAL_STRIPE(
 				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/vertical_stripe.png"),
-				new ResourceLocation(Penguins.MODID, "vertical_stripe"), "#  ", "#  ", "#  "),
+				new ResourceLocation(Penguins.MODID, "vertical_stripe"),
+				Penguins.MODID + "vertical_stripe", "# #", "# #", "# #"),
 		HORIZONTAL_STRIPE(
 				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/horizontal_stripe.png"),
-				new ResourceLocation(Penguins.MODID, "horizontal_stripe"), "###", "   ", "   "),
+				new ResourceLocation(Penguins.MODID, "horizontal_stripe"),
+				Penguins.MODID + "horizontal_stripe", "###", "   ", "###"),
 		CHECKERED(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/checkered.png"),
-				new ResourceLocation(Penguins.MODID, "checkered"), " # ", "# #", " # "),
+				new ResourceLocation(Penguins.MODID, "checkered"), Penguins.MODID + ":checkered", " # ",
+				"# #", " # "),
 		BOTTOM_STRIPE(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/bottom_stripe.png"),
-				new ResourceLocation(Penguins.MODID, "bottom_stripe"), "   ", "   ", "###");
+				new ResourceLocation(Penguins.MODID, "bottom_stripe"), Penguins.MODID + ":bottom_stripe",
+				"   ", "   ", "###");
 
 		private final ResourceLocation fileName;
 		private final ResourceLocation id;
+		private final String unlocalizedName;
 		private final String[] patterns;
 		private ItemStack patternItem = ItemStack.EMPTY;
 
-		private EnumScarfPattern(String fileName, String id) {
-			this(new ResourceLocation(fileName), new ResourceLocation(id));
+		private EnumScarfPattern(String fileName, String id, String unlocalizedName) {
+			this(new ResourceLocation(fileName), new ResourceLocation(id), unlocalizedName);
 		}
 
-		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id) {
-			this.patterns = new String[3];
-			// this.patternItem = ItemStack.EMPTY;
+		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id,
+				String unlocalizedName) {
 			this.fileName = fileName;
 			this.id = id;
+			this.unlocalizedName = unlocalizedName;
+			this.patterns = new String[3];
 		}
 
-		private EnumScarfPattern(String fileName, String id, ItemStack patternItem) {
-			this(new ResourceLocation(fileName), new ResourceLocation(id), patternItem);
+		private EnumScarfPattern(String fileName, String id, String unlocalizedName,
+				ItemStack patternItem) {
+			this(new ResourceLocation(fileName), new ResourceLocation(id), unlocalizedName, patternItem);
 		}
 
-		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id, ItemStack patternItem) {
-			this(fileName, id);
+		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id, String unlocalizedName,
+				ItemStack patternItem) {
+			this(fileName, id, unlocalizedName);
 			this.patternItem = patternItem;
 		}
 
-		private EnumScarfPattern(String fileName, String id, String line1, String line2, String line3) {
-			this(new ResourceLocation(fileName), new ResourceLocation(id), line1, line2, line3);
+		private EnumScarfPattern(String fileName, String id, String unlocalizedName, String line1,
+				String line2, String line3) {
+			this(new ResourceLocation(fileName), new ResourceLocation(id), unlocalizedName, line1, line2,
+					line3);
 		}
 
-		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id, String line1,
-				String line2, String line3) {
-			this(fileName, id);
+		private EnumScarfPattern(ResourceLocation fileName, ResourceLocation id, String unlocalizedName,
+				String line1, String line2, String line3) {
+			this(fileName, id, unlocalizedName);
 			this.patterns[0] = line1;
 			this.patterns[1] = line2;
 			this.patterns[2] = line3;
@@ -112,6 +123,11 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 		@Override
 		public ResourceLocation getId() {
 			return this.id;
+		}
+
+		@Override
+		public String getUnlocalizedName() {
+			return "apparel_pattern." + this.unlocalizedName + ".name";
 		}
 
 		@Override

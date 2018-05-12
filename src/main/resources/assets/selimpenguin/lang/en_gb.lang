@@ -4,3 +4,9 @@ entity.selimpenguin:penguin.name=Penguin
 item.selimpenguin:tophat.name=Tophat
 item.selimpenguin:bowtie.name=Bowtie
 item.selimpenguin:scarf.name=Scarf
+
+apparel_pattern.selimpenguin:base=%s Base
+apparel_pattern.selimpenguin:vertical_stripe=%s Vertical Stripe
+apparel_pattern.selimpenguin:horizontal_stripe=%s Horizontal Stripe
+apparel_pattern.selimpenguin:checkered=%s Checkers
+apparel_pattern.selimpenguin:bottom_stripe=%s Bottom Stripe
