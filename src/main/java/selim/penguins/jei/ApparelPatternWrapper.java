@@ -32,7 +32,7 @@ public class ApparelPatternWrapper<E extends IApparelPattern> implements IShaped
 		for (ItemStack dye : OreDictionary.getOres("dye")) {
 			ItemStack apparelStack = new ItemStack(apparel);
 			dyes.add(dye);
-			apparel.addPattern(apparelStack, new ColoredPattern<E>(this.pattern, EnumDyeColor.WHITE));
+			apparel.addPattern(apparelStack, new ColoredPattern(this.pattern, EnumDyeColor.WHITE));
 			outputs.add(apparelStack);
 		}
 		List<List<ItemStack>> inputs = new ArrayList<List<ItemStack>>();
