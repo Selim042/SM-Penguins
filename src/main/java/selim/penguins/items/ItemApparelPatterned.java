@@ -41,7 +41,7 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
-		for (ColoredPattern<?> pattern : this.getPatterns(stack))
+		for (ColoredPattern pattern : this.getPatterns(stack))
 			tooltip.add(I18n.format(pattern.pattern.getUnlocalizedName(),
 					I18n.format("colors." + Penguins.MODID + ":" + pattern.color.getUnlocalizedName())));
 	}
@@ -58,21 +58,20 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 		for (int i = 0; i < numPatterns; i++) {
 			E pat = possiblePatterns[rand.nextInt(possiblePatterns.length)];
 			EnumDyeColor color = EnumDyeColor.byDyeDamage(rand.nextInt(EnumDyeColor.values().length));
-			ColoredPattern<E> pattern = new ColoredPattern<>(pat, color);
+			ColoredPattern pattern = new ColoredPattern(pat, color);
 			this.addPattern(stack, pattern);
 		}
 		return stack;
 	}
 
-	@SuppressWarnings("unchecked")
-	public ColoredPattern<E>[] getPatterns(ItemStack stack) {
+	public ColoredPattern[] getPatterns(ItemStack stack) {
 		if (stack == null || !(stack.getItem() instanceof ItemApparelPatterned))
 			return null;
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null)
 			return new ColoredPattern[0];
 		ItemApparelPatterned<?> apparel = (ItemApparelPatterned<?>) stack.getItem();
-		List<ColoredPattern<?>> patterns = new ArrayList<>();
+		List<ColoredPattern> patterns = new ArrayList<>();
 		NBTTagList list = nbt.getTagList("patterns", 10);
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound patternNbt = list.getCompoundTagAt(i);
@@ -85,16 +84,16 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 			}
 			if (pattern == null)
 				continue;
-			ColoredPattern<?> coloredPat = new ColoredPattern<>(pattern,
+			ColoredPattern coloredPat = new ColoredPattern(pattern,
 					EnumDyeColor.byMetadata(patternNbt.getInteger("color")));
 			if (coloredPat == null || coloredPat.getPattern() == null)
 				continue;
 			patterns.add(coloredPat);
 		}
-		return (ColoredPattern<E>[]) patterns.toArray(new ColoredPattern[patterns.size()]);
+		return (ColoredPattern[]) patterns.toArray(new ColoredPattern[patterns.size()]);
 	}
 
-	public void addPattern(ItemStack stack, ColoredPattern<E> pattern) {
+	public void addPattern(ItemStack stack, ColoredPattern pattern) {
 		if (stack == null || !(stack.getItem() instanceof ItemApparelPatterned)
 				|| !pattern.getPattern().getApplicableApparel().equals(stack.getItem()))
 			return;
@@ -113,17 +112,17 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 		stack.setTagCompound(nbt);
 	}
 
-	public static class ColoredPattern<E extends IApparelPattern> {
+	public static class ColoredPattern {
 
-		private final E pattern;
+		private final IApparelPattern pattern;
 		private final EnumDyeColor color;
 
-		public ColoredPattern(E pattern, EnumDyeColor color) {
+		public ColoredPattern(IApparelPattern pattern, EnumDyeColor color) {
 			this.pattern = pattern;
 			this.color = color;
 		}
 
-		public E getPattern() {
+		public IApparelPattern getPattern() {
 			return this.pattern;
 		}
 

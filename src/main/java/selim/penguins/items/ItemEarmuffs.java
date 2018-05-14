@@ -36,11 +36,10 @@ public class ItemEarmuffs extends ItemApparelPatterned<EnumEarmuffsPattern> {
 			if (!(stack.getItem() instanceof ItemApparelPatterned))
 				return -1;
 			int toReturn = -1;
-			for (ColoredPattern<?> pattern : ((ItemApparelPatterned<?>) stack.getItem())
+			for (ColoredPattern pattern : ((ItemApparelPatterned<?>) stack.getItem())
 					.getPatterns(stack)) {
 				switch ((EnumEarmuffsPattern) pattern.getPattern()) {
 				case BASE:
-					// if (toReturn == -1)
 					toReturn = pattern.getColor().getColorValue();
 					break;
 				case BRACE:

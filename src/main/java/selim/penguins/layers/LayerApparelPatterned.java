@@ -32,7 +32,7 @@ public class LayerApparelPatterned implements LayerRenderer<EntityPenguin> {
 			ItemStack stack = entity.getSlot(slot);
 			if (stack != null && stack.getItem() instanceof ItemApparelPatterned) {
 				ItemApparelPatterned<?> apparel = (ItemApparelPatterned<?>) stack.getItem();
-				ColoredPattern<?>[] patterns = apparel.getPatterns(stack);
+				ColoredPattern[] patterns = apparel.getPatterns(stack);
 				GlStateManager.pushMatrix();
 				// GlStateManager.depthFunc(GL11.GL_EQUAL);
 				if (entity.isChild()) {
@@ -54,7 +54,7 @@ public class LayerApparelPatterned implements LayerRenderer<EntityPenguin> {
 				this.renderer.bindTexture(texture);
 				model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
 						scale);
-				for (ColoredPattern<?> pattern : patterns) {
+				for (ColoredPattern pattern : patterns) {
 					// System.out.println(pattern.getPattern() + ": " +
 					// pattern.getColor());
 					this.renderer.bindTexture(pattern.getPattern().getTexture());

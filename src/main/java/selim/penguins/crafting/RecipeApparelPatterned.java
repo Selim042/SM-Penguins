@@ -42,7 +42,6 @@ public class RecipeApparelPatterned {
 				return this.matchPatterns(inv) != null;
 		}
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public ItemStack getCraftingResult(InventoryCrafting inv) {
 			ItemStack itemstack = ItemStack.EMPTY;

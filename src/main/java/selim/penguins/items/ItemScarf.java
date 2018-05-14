@@ -32,9 +32,8 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 		public int colorMultiplier(ItemStack stack, int tintIndex) {
 			if (!(stack.getItem() instanceof ItemApparelPatterned) || tintIndex != 0)
 				return -1;
-			ColoredPattern<?>[] patterns = ((ItemApparelPatterned<?>) stack.getItem())
-					.getPatterns(stack);
-			for (ColoredPattern<?> pattern : patterns)
+			ColoredPattern[] patterns = ((ItemApparelPatterned<?>) stack.getItem()).getPatterns(stack);
+			for (ColoredPattern pattern : patterns)
 				if (pattern.getPattern().equals(EnumScarfPattern.BASE))
 					return pattern.getColor().getColorValue();
 			return 0xFFFFFF;
