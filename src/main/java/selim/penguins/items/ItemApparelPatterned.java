@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import selim.penguins.IApparelPattern;
+import selim.penguins.Penguins;
 
 public abstract class ItemApparelPatterned<E extends IApparelPattern> extends ItemApparel {
 
@@ -40,11 +41,9 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
-		for (ColoredPattern<?> pattern : this.getPatterns(stack)) {
-			tooltip.add(pattern.pattern.getUnlocalizedName());
+		for (ColoredPattern<?> pattern : this.getPatterns(stack))
 			tooltip.add(I18n.format(pattern.pattern.getUnlocalizedName(),
-					I18n.format(pattern.color.getUnlocalizedName())));
-		}
+					I18n.format("colors." + Penguins.MODID + ":" + pattern.color.getUnlocalizedName())));
 	}
 
 	public abstract E[] getPossiblePatterns();

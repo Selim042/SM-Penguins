@@ -1,12 +1,8 @@
 package selim.penguins.items;
 
-import java.util.List;
-
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import selim.penguins.IApparelPattern;
 import selim.penguins.Penguins;
 import selim.penguins.items.ItemScarf.EnumScarfPattern;
@@ -18,14 +14,6 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 		this.setRegistryName(Penguins.MODID, "scarf");
 		this.setUnlocalizedName(Penguins.MODID + ":scarf");
 		this.setMaxStackSize(1);
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
-			ITooltipFlag flagIn) {
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-		// for (ColoredPattern<EnumScarfPattern> pattern : getPatterns(stack))
-		// tooltip.add(pattern.getPattern() + ": " + pattern.getColor());
 	}
 
 	@Override
