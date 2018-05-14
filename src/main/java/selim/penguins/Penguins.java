@@ -35,6 +35,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import selim.penguins.apparel.ModelPenguinBowtie;
+import selim.penguins.apparel.ModelPenguinEarmuffs;
+import selim.penguins.apparel.ModelPenguinScarf;
 import selim.penguins.apparel.ModelPenguinTophat;
 import selim.penguins.crafting.RecipeApparelColoredDying;
 import selim.penguins.crafting.RecipeApparelPatterned;
@@ -42,6 +45,7 @@ import selim.penguins.items.ItemApparelColored;
 import selim.penguins.items.ItemApparelPatterned;
 import selim.penguins.items.ItemBowtie;
 import selim.penguins.items.ItemBowtie.ItemColorBowtie;
+import selim.penguins.items.ItemEarmuffs;
 import selim.penguins.items.ItemScarf;
 import selim.penguins.items.ItemScarf.ItemColorScarf;
 import selim.penguins.items.ItemTophat;
@@ -67,6 +71,8 @@ public class Penguins {
 		public static final ItemApparelColored BOWTIE = null;
 		public static final ItemApparelColored TOPHAT = null;
 		public static final ItemApparelPatterned<?> SCARF = null;
+		// public static final ItemApparelPatterned<?> BOBBLE_HAT = null;
+		public static final ItemApparelPatterned<?> EARMUFFS = null;
 		// public static final ItemApparel FEZ = null;
 
 	}
@@ -83,6 +89,8 @@ public class Penguins {
 		event.getRegistry().register(new ItemBowtie());
 		event.getRegistry().register(new ItemTophat());
 		event.getRegistry().register(new ItemScarf());
+		// event.getRegistry().register(new ItemBobbleHat());
+		event.getRegistry().register(new ItemEarmuffs());
 		// event.getRegistry().register(new ItemFez());
 	}
 
@@ -143,6 +151,23 @@ public class Penguins {
 				new ModelResourceLocation(Items.TOPHAT.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(Items.SCARF, 0,
 				new ModelResourceLocation(Items.SCARF.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Items.EARMUFFS, 0,
+				new ModelResourceLocation(Items.EARMUFFS.getRegistryName(), "inventory"));
+
+		ApparelModelManager.registerModel(Items.BOWTIE, new ModelPenguinBowtie());
+		ApparelModelManager.registerModel(Items.TOPHAT, new ModelPenguinTophat());
+		ApparelModelManager.registerModel(Items.SCARF, new ModelPenguinScarf());
+		ApparelModelManager.registerModel(Items.EARMUFFS, new ModelPenguinEarmuffs());
+
+		ApparelModelManager.registerTextures(Items.BOWTIE,
+				new ResourceLocation(Penguins.MODID, "textures/apparel/bowtie.png"));
+		ApparelModelManager.registerTextures(Items.TOPHAT,
+				new ResourceLocation(Penguins.MODID, "textures/apparel/tophat.png"),
+				new ResourceLocation(Penguins.MODID, "textures/apparel/tophat_stripe.png"));
+		ApparelModelManager.registerBaseTexture(Items.SCARF,
+				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf.png"));
+		ApparelModelManager.registerBaseTexture(Items.EARMUFFS,
+				new ResourceLocation(Penguins.MODID, "textures/apparel/earmuffs.png"));
 	}
 
 }
