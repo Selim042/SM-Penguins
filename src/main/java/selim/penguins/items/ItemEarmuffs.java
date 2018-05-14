@@ -33,27 +33,42 @@ public class ItemEarmuffs extends ItemApparelPatterned<EnumEarmuffsPattern> {
 
 		@Override
 		public int colorMultiplier(ItemStack stack, int tintIndex) {
-			if (!(stack.getItem() instanceof ItemApparelPatterned) || tintIndex != 0)
+			if (!(stack.getItem() instanceof ItemApparelPatterned))
 				return -1;
-			ColoredPattern<?>[] patterns = ((ItemApparelPatterned<?>) stack.getItem())
-					.getPatterns(stack);
-			for (ColoredPattern<?> pattern : patterns)
-				if (pattern.getPattern().equals(EnumEarmuffsPattern.BASE))
-					return pattern.getColor().getColorValue();
-			return 0xFFFFFF;
+			int toReturn = -1;
+			for (ColoredPattern<?> pattern : ((ItemApparelPatterned<?>) stack.getItem())
+					.getPatterns(stack)) {
+				switch ((EnumEarmuffsPattern) pattern.getPattern()) {
+				case BASE:
+					// if (toReturn == -1)
+					toReturn = pattern.getColor().getColorValue();
+					break;
+				case BRACE:
+					if (tintIndex == 0)
+						toReturn = pattern.getColor().getColorValue();
+					break;
+				case MUFFS:
+					if (tintIndex == 1)
+						toReturn = pattern.getColor().getColorValue();
+					break;
+				default:
+					break;
+				}
+			}
+			return toReturn == -1 ? 0xFFFFFF : toReturn;
 		}
 
 	}
 
 	public static enum EnumEarmuffsPattern implements IApparelPattern {
 		BASE(new ResourceLocation(Penguins.MODID, "textures/apparel/earmuffs/base.png"),
-				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + "base", "   ", "   ",
+				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + ":base", "   ", "   ",
 				" # "),
 		BRACE(new ResourceLocation(Penguins.MODID, "textures/apparel/earmuffs/brace.png"),
-				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + "brace", "###", "   ",
+				new ResourceLocation(Penguins.MODID, "brace"), Penguins.MODID + ":brace", "###", "   ",
 				"   "),
 		MUFFS(new ResourceLocation(Penguins.MODID, "textures/apparel/earmuffs/muffs.png"),
-				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + "muffs", "   ", "# #",
+				new ResourceLocation(Penguins.MODID, "muffs"), Penguins.MODID + ":muffs", "   ", "# #",
 				"   ");
 
 		private final ResourceLocation fileName;
@@ -142,7 +157,7 @@ public class ItemEarmuffs extends ItemApparelPatterned<EnumEarmuffsPattern> {
 
 		@Override
 		public ItemApparelPatterned<?> getApplicableApparel() {
-			return Penguins.Items.SCARF;
+			return Penguins.Items.EARMUFFS;
 		}
 	}
 
