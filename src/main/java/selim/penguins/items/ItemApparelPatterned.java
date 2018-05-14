@@ -77,7 +77,8 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 	}
 
 	public void addPattern(ItemStack stack, ColoredPattern<E> pattern) {
-		if (stack == null || !(stack.getItem() instanceof ItemApparelPatterned))
+		if (stack == null || !(stack.getItem() instanceof ItemApparelPatterned)
+				|| !pattern.getPattern().getApplicableApparel().equals(stack.getItem()))
 			return;
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
