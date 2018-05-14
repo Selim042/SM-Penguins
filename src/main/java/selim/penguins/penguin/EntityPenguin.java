@@ -1,6 +1,7 @@
 package selim.penguins.penguin;
 
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIFollowParent;
@@ -22,6 +23,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import selim.penguins.items.ItemApparel;
 import selim.penguins.items.ItemApparel.EnumPenguinSlot;
@@ -119,6 +121,16 @@ public class EntityPenguin extends EntityAnimal {
 		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(7, new EntityAILookIdle(this));
+	}
+
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty,
+			IEntityLivingData livingdata) {
+		if (this.rand.nextInt(100) == 0) {
+			ItemStack stack = ItemApparel.getRandomFromAll(this.rand);
+			this.setSlot(((ItemApparel) stack.getItem()).getSlot(), stack);
+		}
+		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
 	@Override

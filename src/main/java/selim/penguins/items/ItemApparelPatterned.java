@@ -2,6 +2,7 @@ package selim.penguins.items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -39,12 +40,30 @@ public abstract class ItemApparelPatterned<E extends IApparelPattern> extends It
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
-		for (ColoredPattern<?> pattern : this.getPatterns(stack))
+		for (ColoredPattern<?> pattern : this.getPatterns(stack)) {
+			tooltip.add(pattern.pattern.getUnlocalizedName());
 			tooltip.add(I18n.format(pattern.pattern.getUnlocalizedName(),
 					I18n.format(pattern.color.getUnlocalizedName())));
+		}
 	}
 
 	public abstract E[] getPossiblePatterns();
+
+	@Override
+	public ItemStack getRandomApparel(Random rand) {
+		E[] possiblePatterns = this.getPossiblePatterns();
+		int numPatterns = rand.nextInt(possiblePatterns.length);
+		if (numPatterns > 6)
+			numPatterns = 6;
+		ItemStack stack = new ItemStack(this);
+		for (int i = 0; i < numPatterns; i++) {
+			E pat = possiblePatterns[rand.nextInt(possiblePatterns.length)];
+			EnumDyeColor color = EnumDyeColor.byDyeDamage(rand.nextInt(EnumDyeColor.values().length));
+			ColoredPattern<E> pattern = new ColoredPattern<>(pat, color);
+			this.addPattern(stack, pattern);
+		}
+		return stack;
+	}
 
 	@SuppressWarnings("unchecked")
 	public ColoredPattern<E>[] getPatterns(ItemStack stack) {

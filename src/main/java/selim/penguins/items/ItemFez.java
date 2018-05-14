@@ -1,5 +1,8 @@
 package selim.penguins.items;
 
+import java.util.Random;
+
+import net.minecraft.item.ItemStack;
 import selim.penguins.Penguins;
 
 public class ItemFez extends ItemApparel {
@@ -14,6 +17,11 @@ public class ItemFez extends ItemApparel {
 	@Override
 	public boolean shouldShinkIfBaby() {
 		return false;
+	}
+
+	@Override
+	public ItemStack getRandomApparel(Random rand) {
+		return new ItemStack(this);
 	}
 
 }

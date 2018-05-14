@@ -1,6 +1,7 @@
 package selim.penguins.items;
 
-import net.minecraft.client.renderer.color.IItemColor;
+import java.util.Random;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -8,6 +9,13 @@ public abstract class ItemApparelColored extends ItemApparel {
 
 	public ItemApparelColored(EnumPenguinSlot slot) {
 		super(slot);
+	}
+
+	@Override
+	public ItemStack getRandomApparel(Random rand) {
+		ItemStack stack = new ItemStack(this);
+		setColor(stack, rand.nextInt(Integer.MAX_VALUE));
+		return stack;
 	}
 
 	public static int getColor(ItemStack stack) {

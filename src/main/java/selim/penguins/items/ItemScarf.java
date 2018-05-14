@@ -23,8 +23,9 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
-		for (ColoredPattern<EnumScarfPattern> pattern : getPatterns(stack))
-			tooltip.add(pattern.getPattern() + ": " + pattern.getColor());
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		// for (ColoredPattern<EnumScarfPattern> pattern : getPatterns(stack))
+		// tooltip.add(pattern.getPattern() + ": " + pattern.getColor());
 	}
 
 	@Override
@@ -55,16 +56,16 @@ public class ItemScarf extends ItemApparelPatterned<EnumScarfPattern> {
 
 	public static enum EnumScarfPattern implements IApparelPattern {
 		BASE(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/base.png"),
-				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + "base", "   ", "   ",
+				new ResourceLocation(Penguins.MODID, "base"), Penguins.MODID + ":base", "   ", "   ",
 				" # "),
 		VERTICAL_STRIPE(
 				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/vertical_stripe.png"),
 				new ResourceLocation(Penguins.MODID, "vertical_stripe"),
-				Penguins.MODID + "vertical_stripe", "# #", "# #", "# #"),
+				Penguins.MODID + ":vertical_stripe", "# #", "# #", "# #"),
 		HORIZONTAL_STRIPE(
 				new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/horizontal_stripe.png"),
 				new ResourceLocation(Penguins.MODID, "horizontal_stripe"),
-				Penguins.MODID + "horizontal_stripe", "###", "   ", "###"),
+				Penguins.MODID + ":horizontal_stripe", "###", "   ", "###"),
 		CHECKERED(new ResourceLocation(Penguins.MODID, "textures/apparel/scarf/checkered.png"),
 				new ResourceLocation(Penguins.MODID, "checkered"), Penguins.MODID + ":checkered", " # ",
 				"# #", " # "),
