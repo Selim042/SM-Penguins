@@ -1,6 +1,6 @@
 [
 {
-  "modid": "selimpenguins",
+  "modid": "selimpenguin",
   "name": "Penguins",
   "description": "Simply adds penguins.",
   "version": "${version}",
