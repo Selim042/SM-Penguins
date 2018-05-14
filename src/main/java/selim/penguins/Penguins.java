@@ -46,6 +46,7 @@ import selim.penguins.items.ItemApparelPatterned;
 import selim.penguins.items.ItemBowtie;
 import selim.penguins.items.ItemBowtie.ItemColorBowtie;
 import selim.penguins.items.ItemEarmuffs;
+import selim.penguins.items.ItemEarmuffs.ItemColorEarmuffs;
 import selim.penguins.items.ItemScarf;
 import selim.penguins.items.ItemScarf.ItemColorScarf;
 import selim.penguins.items.ItemTophat;
@@ -133,6 +134,7 @@ public class Penguins {
 		colors.registerItemColorHandler(new ItemColorBowtie(), Items.BOWTIE);
 		colors.registerItemColorHandler(new ItemColorTophat(), Items.TOPHAT);
 		colors.registerItemColorHandler(new ItemColorScarf(), Items.SCARF);
+		colors.registerItemColorHandler(new ItemColorEarmuffs(), Items.EARMUFFS);
 
 		for (RenderPlayer renderPlayer : Minecraft.getMinecraft().getRenderManager().getSkinMap()
 				.values())

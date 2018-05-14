@@ -13,6 +13,9 @@ public class ItemEarmuffs extends ItemApparelPatterned<EnumEarmuffsPattern> {
 
 	public ItemEarmuffs() {
 		super(EnumPenguinSlot.HEAD);
+		this.setRegistryName(Penguins.MODID, "earmuffs");
+		this.setUnlocalizedName(Penguins.MODID + ":earmuffs");
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -26,7 +29,7 @@ public class ItemEarmuffs extends ItemApparelPatterned<EnumEarmuffsPattern> {
 		return false;
 	}
 
-	public static class ItemColorScarf implements IItemColor {
+	public static class ItemColorEarmuffs implements IItemColor {
 
 		@Override
 		public int colorMultiplier(ItemStack stack, int tintIndex) {
