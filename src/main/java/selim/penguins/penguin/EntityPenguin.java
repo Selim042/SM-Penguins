@@ -22,6 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -131,6 +132,16 @@ public class EntityPenguin extends EntityAnimal {
 			this.setSlot(((ItemApparel) stack.getItem()).getSlot(), stack);
 		}
 		return super.onInitialSpawn(difficulty, livingdata);
+	}
+
+	@Override
+	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
+		for (EnumPenguinSlot slot : EnumPenguinSlot.values()) {
+			ItemStack stack = this.getSlot(slot);
+			if (stack != null && !stack.isEmpty())
+				this.entityDropItem(this.getSlot(slot), 0);
+		}
+		super.dropLoot(wasRecentlyHit, lootingModifier, source);
 	}
 
 	@Override
