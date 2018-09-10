@@ -4,10 +4,6 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-/**
- * ModelPenguin - Either Mojang or a mod author
- * Created using Tabula 7.0.0
- */
 public class ModelPenguinFez extends ModelBase {
     public ModelRenderer shape8;
     public ModelRenderer shape9;

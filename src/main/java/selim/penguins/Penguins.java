@@ -74,6 +74,7 @@ public class Penguins {
 		public static final ItemApparelPatterned<?> SCARF = null;
 		// public static final ItemApparelPatterned<?> BOBBLE_HAT = null;
 		public static final ItemApparelPatterned<?> EARMUFFS = null;
+		public static final ItemApparelColored FLOWER = null;
 		// public static final ItemApparel FEZ = null;
 
 	}
